@@ -39,6 +39,32 @@ function App() {
       .catch(err => console.error("PHP Backend is not running:", err));
   }, []);
 
+  const handleLogin = (e: React.MouseEvent) => {
+    e.preventDefault();
+    fetch('/api/auth.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'login', email: 'admin@test.com', password: '123456' })
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert(`Відповідь від PHP (auth.php):\n\n${data.message}\nТокен: ${data.token || 'Немає'}`);
+    })
+    .catch(err => alert("Помилка запиту до PHP"));
+  };
+
+  const handleFavorites = (e: React.MouseEvent) => {
+    e.preventDefault();
+    fetch('/api/favorites.php?action=list', {
+      headers: { 'Authorization': 'Bearer mock_jwt_token_8829910' }
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert(`Відповідь від PHP (favorites.php):\n\n${data.message}\nЗнайдено товарів: ${data.favorites ? data.favorites.length : 0}`);
+    })
+    .catch(err => alert("Помилка запиту до PHP"));
+  };
+
   return (
     <HelmetProvider>
       {/* SEO META TAGS */}
@@ -77,11 +103,11 @@ function App() {
           </div>
 
           <div className="header-actions">
-            <a href="#" className="action-item">
+            <a href="#" className="action-item" onClick={handleLogin}>
               <User size={24} />
               <span>Кабінет</span>
             </a>
-            <a href="#" className="action-item">
+            <a href="#" className="action-item" onClick={handleFavorites}>
               <Heart size={24} />
               <span>Бажане</span>
             </a>
