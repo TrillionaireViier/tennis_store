@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Phone, Mail, MapPin, Search, User, Heart, ShoppingCart, Target, Users, Trophy, Activity, Dumbbell, ShieldCheck } from 'lucide-react';
+import { Phone, Mail, MapPin, Search, User, Heart, ShoppingCart, Target, Users, Trophy, Activity, Dumbbell, ShieldCheck, Clock, Map } from 'lucide-react';
 
 // Map icon names from DB to actual components
 const IconMap: Record<string, any> = {
@@ -118,11 +118,11 @@ function App() {
 
         {/* Categories / Services Grid */}
         <section className="categories-section">
-          <h2 className="section-title">Наші Послуги (Завантажено з PHP)</h2>
+          <h2 className="section-title">Наші Послуги</h2>
           <div className="categories-grid">
             
             {categories.length === 0 ? (
-              <p>Завантаження з PHP бекенду... (переконайтесь що php -S запущено)</p>
+              <p></p>
             ) : (
               categories.map(cat => {
                 const IconComponent = IconMap[cat.icon] || Target;
@@ -141,6 +141,55 @@ function App() {
           </div>
         </section>
       </main>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-content">
+            <div className="footer-column">
+              <h4>Про Нас</h4>
+              <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                TableTennis - це сучасні зали для настільного тенісу, професійне обладнання та команда майстрів спорту. Ми розвиваємо теніс в Україні.
+              </p>
+            </div>
+            
+            <div className="footer-column">
+              <h4>Клієнтам</h4>
+              <div className="footer-links">
+                <a href="#">Оренда столів</a>
+                <a href="#">Розклад турнірів</a>
+                <a href="#">Тренери</a>
+                <a href="#">Ремонт інвентарю</a>
+                <a href="#">Правила клубу</a>
+              </div>
+            </div>
+
+            <div className="footer-column">
+              <h4>Контакти</h4>
+              <div className="footer-contact-item">
+                <Phone size={18} color="var(--color-secondary)" />
+                <span>+38 (000) 000-00-00</span>
+              </div>
+              <div className="footer-contact-item">
+                <Mail size={18} color="var(--color-secondary)" />
+                <span>info@tabletennis.com.ua</span>
+              </div>
+              <div className="footer-contact-item">
+                <Map size={18} color="var(--color-secondary)" />
+                <span>м. Київ, вул. Спортивна, 1</span>
+              </div>
+              <div className="footer-contact-item">
+                <Clock size={18} color="var(--color-secondary)" />
+                <span>Пн-Нд: 09:00 - 22:00</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="footer-bottom">
+            &copy; {new Date().getFullYear()} TableTennis Store. Всі права захищені. Розроблено для чемпіонів.
+          </div>
+        </div>
+      </footer>
     </HelmetProvider>
   );
 }
