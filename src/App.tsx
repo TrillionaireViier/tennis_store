@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Phone, Mail, MapPin, Search, User, Heart, ShoppingCart, Target, Users, Trophy, Activity, Dumbbell, ShieldCheck, Clock, Map } from 'lucide-react';
+import { Phone, Mail, MapPin, Search, User, Heart, ShoppingCart, Target, Users, Trophy, Activity, Dumbbell, ShieldCheck, Clock, Map, X } from 'lucide-react';
 
 // Map icon names from DB to actual components
 const IconMap: Record<string, any> = {
@@ -26,8 +26,15 @@ function App() {
     description: "Настільний теніс"
   });
 
+  // Modal States
+  const [activeModal, setActiveModal] = useState<'login' | 'favorites' | 'cart' | null>(null);
+
+  // Data States
+  const [favorites, setFavorites] = useState<any[]>([]);
+  const [token, setToken] = useState<string | null>(null);
+
   useEffect(() => {
-    // Fetch data from PHP Backend (routed via Vercel Serverless or Vite Proxy)
+    // Fetch data from PHP Backend
     fetch('/api/products.php')
       .then(res => res.json())
       .then(json => {
@@ -39,7 +46,7 @@ function App() {
       .catch(err => console.error("PHP Backend is not running:", err));
   }, []);
 
-  const handleLogin = (e: React.MouseEvent) => {
+  const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     fetch('/api/auth.php', {
       method: 'POST',
@@ -48,31 +55,39 @@ function App() {
     })
     .then(res => res.json())
     .then(data => {
-      alert(`Відповідь від PHP (auth.php):\n\n${data.message}\nТокен: ${data.token || 'Немає'}`);
+      if (data.status === 'success') {
+        setToken(data.token);
+        alert('Успішна авторизація!');
+        setActiveModal(null);
+      } else {
+        alert(data.message);
+      }
     })
     .catch(err => alert("Помилка запиту до PHP"));
   };
 
-  const handleFavorites = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const loadFavorites = () => {
     fetch('/api/favorites.php?action=list', {
-      headers: { 'Authorization': 'Bearer mock_jwt_token_8829910' }
+      headers: { 'Authorization': `Bearer ${token || 'mock_jwt_token_8829910'}` }
     })
     .then(res => res.json())
     .then(data => {
-      alert(`Відповідь від PHP (favorites.php):\n\n${data.message}\nЗнайдено товарів: ${data.favorites ? data.favorites.length : 0}`);
+      if (data.favorites) setFavorites(data.favorites);
     })
-    .catch(err => alert("Помилка запиту до PHP"));
+    .catch(err => console.error(err));
   };
+
+  useEffect(() => {
+    if (activeModal === 'favorites') {
+      loadFavorites();
+    }
+  }, [activeModal]);
 
   return (
     <HelmetProvider>
-      {/* SEO META TAGS */}
       <Helmet>
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />
-        <meta property="og:title" content={seo.title} />
-        <meta property="og:description" content={seo.description} />
       </Helmet>
 
       {/* Top Contact Bar */}
@@ -103,18 +118,18 @@ function App() {
           </div>
 
           <div className="header-actions">
-            <a href="#" className="action-item" onClick={handleLogin}>
+            <button className="action-item" onClick={() => setActiveModal('login')}>
               <User size={24} />
               <span>Кабінет</span>
-            </a>
-            <a href="#" className="action-item" onClick={handleFavorites}>
+            </button>
+            <button className="action-item" onClick={() => setActiveModal('favorites')}>
               <Heart size={24} />
               <span>Бажане</span>
-            </a>
-            <a href="#" className="action-item">
+            </button>
+            <button className="action-item" onClick={() => setActiveModal('cart')}>
               <ShoppingCart size={24} />
               <span>Кошик</span>
-            </a>
+            </button>
           </div>
         </div>
       </header>
@@ -146,24 +161,18 @@ function App() {
         <section className="categories-section">
           <h2 className="section-title">Наші Послуги</h2>
           <div className="categories-grid">
-            
-            {categories.length === 0 ? (
-              <p></p>
-            ) : (
-              categories.map(cat => {
-                const IconComponent = IconMap[cat.icon] || Target;
-                return (
-                  <a href="#" className="category-card" key={cat.id}>
-                    <div className="category-icon">
-                      <IconComponent size={40} />
-                    </div>
-                    <h3 className="category-title">{cat.title}</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{cat.description}</p>
-                  </a>
-                )
-              })
-            )}
-
+            {categories.map(cat => {
+              const IconComponent = IconMap[cat.icon] || Target;
+              return (
+                <a href="#" className="category-card" key={cat.id}>
+                  <div className="category-icon">
+                    <IconComponent size={40} />
+                  </div>
+                  <h3 className="category-title">{cat.title}</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{cat.description}</p>
+                </a>
+              )
+            })}
           </div>
         </section>
       </main>
@@ -212,10 +221,52 @@ function App() {
           </div>
           
           <div className="footer-bottom">
-            &copy; {new Date().getFullYear()} TableTennis Store. Всі права захищені. Розроблено для чемпіонів.
+            &copy; {new Date().getFullYear()} TableTennis Store. Всі права захищені.
           </div>
         </div>
       </footer>
+
+      {/* MODALS */}
+      {activeModal && (
+        <div className="modal-backdrop" onClick={() => setActiveModal(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setActiveModal(null)}><X size={24} /></button>
+            
+            {activeModal === 'login' && (
+              <div className="modal-body">
+                <h2>Особистий Кабінет</h2>
+                <form onSubmit={handleLoginSubmit}>
+                  <input type="email" placeholder="Email" defaultValue="admin@test.com" className="modal-input" />
+                  <input type="password" placeholder="Пароль" defaultValue="123456" className="modal-input" />
+                  <button type="submit" className="btn-cta" style={{width: '100%'}}>Увійти</button>
+                </form>
+              </div>
+            )}
+
+            {activeModal === 'favorites' && (
+              <div className="modal-body">
+                <h2>Ваше Бажане</h2>
+                <div className="modal-list">
+                  {favorites.length === 0 ? <p>Список порожній.</p> : favorites.map((fav, i) => (
+                    <div key={i} className="modal-list-item">
+                      <Target size={24} />
+                      <span>{fav.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeModal === 'cart' && (
+              <div className="modal-body">
+                <h2>Кошик</h2>
+                <p>Ваш кошик наразі порожній.</p>
+                <button className="btn-cta" style={{width: '100%', marginTop: '20px'}} onClick={() => setActiveModal(null)}>Продовжити покупки</button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </HelmetProvider>
   );
 }
