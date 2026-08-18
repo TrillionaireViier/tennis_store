@@ -27,8 +27,8 @@ function App() {
   });
 
   useEffect(() => {
-    // Fetch data from Native Vercel Serverless Backend
-    fetch('/api/products')
+    // Fetch data from PHP Backend (routed via Vercel Serverless or Vite Proxy)
+    fetch('/api/products.php')
       .then(res => res.json())
       .then(json => {
         if (json.status === 'success') {
