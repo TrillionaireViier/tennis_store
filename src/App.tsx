@@ -1,8 +1,54 @@
+import { useEffect, useState } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Phone, Mail, MapPin, Search, User, Heart, ShoppingCart, Target, Users, Trophy, Activity, Dumbbell, ShieldCheck } from 'lucide-react';
 
+// Map icon names from DB to actual components
+const IconMap: Record<string, any> = {
+  Target, Users, Dumbbell, Trophy, Activity, ShieldCheck
+};
+
+interface Category {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface SEOData {
+  title: string;
+  description: string;
+}
+
 function App() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [seo, setSeo] = useState<SEOData>({
+    title: "Table Tennis Store",
+    description: "Настільний теніс"
+  });
+
+  useEffect(() => {
+    // Fetch data from PHP Backend
+    fetch('http://localhost:8000/api/products.php')
+      .then(res => res.json())
+      .then(json => {
+        if (json.status === 'success') {
+          setCategories(json.data);
+          setSeo(json.seo);
+        }
+      })
+      .catch(err => console.error("PHP Backend is not running:", err));
+  }, []);
+
   return (
-    <>
+    <HelmetProvider>
+      {/* SEO META TAGS */}
+      <Helmet>
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.description} />
+        <meta property="og:title" content={seo.title} />
+        <meta property="og:description" content={seo.description} />
+      </Helmet>
+
       {/* Top Contact Bar */}
       <div className="top-bar">
         <div className="container top-bar-content">
@@ -72,61 +118,30 @@ function App() {
 
         {/* Categories / Services Grid */}
         <section className="categories-section">
-          <h2 className="section-title">Наші Послуги</h2>
+          <h2 className="section-title">Наші Послуги (Завантажено з PHP)</h2>
           <div className="categories-grid">
             
-            <a href="#" className="category-card">
-              <div className="category-icon">
-                <Target size={40} />
-              </div>
-              <h3 className="category-title">Оренда Столів</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Професійні столи для вашої гри в зручний час.</p>
-            </a>
-
-            <a href="#" className="category-card">
-              <div className="category-icon">
-                <Users size={40} />
-              </div>
-              <h3 className="category-title">Групові Тренування</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Навчання в групах під керівництвом майстрів спорту.</p>
-            </a>
-
-            <a href="#" className="category-card">
-              <div className="category-icon">
-                <Dumbbell size={40} />
-              </div>
-              <h3 className="category-title">Індивідуальні Заняття</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Персональний підхід для швидкого прогресу.</p>
-            </a>
-
-            <a href="#" className="category-card">
-              <div className="category-icon">
-                <Trophy size={40} />
-              </div>
-              <h3 className="category-title">Турніри</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Щотижневі змагання для любителів та професіоналів.</p>
-            </a>
-
-            <a href="#" className="category-card">
-              <div className="category-icon">
-                <Activity size={40} />
-              </div>
-              <h3 className="category-title">Корпоративи</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Організація спортивних заходів для компаній.</p>
-            </a>
-
-            <a href="#" className="category-card">
-              <div className="category-icon">
-                <ShieldCheck size={40} />
-              </div>
-              <h3 className="category-title">Ремонт Інвентарю</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Переклейка накладок та збірка ракеток.</p>
-            </a>
+            {categories.length === 0 ? (
+              <p>Завантаження з PHP бекенду... (переконайтесь що php -S запущено)</p>
+            ) : (
+              categories.map(cat => {
+                const IconComponent = IconMap[cat.icon] || Target;
+                return (
+                  <a href="#" className="category-card" key={cat.id}>
+                    <div className="category-icon">
+                      <IconComponent size={40} />
+                    </div>
+                    <h3 className="category-title">{cat.title}</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{cat.description}</p>
+                  </a>
+                )
+              })
+            )}
 
           </div>
         </section>
       </main>
-    </>
+    </HelmetProvider>
   );
 }
 
