@@ -3,7 +3,9 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useLang } from '../context/LangContext';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useFavorites } from '../context/FavoritesContext';
+import { ChevronLeft, ChevronRight, Heart } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface EquipmentItem {
   id: number;
@@ -25,7 +27,7 @@ const homeT = {
     bookBtn: "Забронювати стіл",
     popularProducts: "Популярні Товари",
     allProducts: "Всі товари",
-    galleryTitle: "Наше Життя та Турніри",
+    galleryTitle: "Блог",
     addToCart: "В кошик"
   },
   en: {
@@ -38,7 +40,7 @@ const homeT = {
     bookBtn: "Book a Table",
     popularProducts: "Popular Products",
     allProducts: "All Products",
-    galleryTitle: "Our Life & Tournaments",
+    galleryTitle: "Blog",
     addToCart: "Add to Cart"
   }
 };
@@ -48,6 +50,16 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { addToCart } = useCart();
   const { lang } = useLang();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  
+  const handleToggleFavorite = (item: EquipmentItem) => {
+    if (isFavorite(item.id)) {
+      toast.success('Видалено з бажаного');
+    } else {
+      toast.success('Додано до бажаного ❤️');
+    }
+    toggleFavorite(item);
+  };
 
   const t = homeT[lang];
 
@@ -173,8 +185,14 @@ export default function Home() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '30px' }}>
               {products.map(item => (
                 <div key={item.id} style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e5e7eb', display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ height: '220px', overflow: 'hidden' }}>
+                  <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
                     <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }} />
+                    <button 
+                      onClick={() => handleToggleFavorite(item)} 
+                      style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255, 255, 255, 0.8)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'transform 0.2s', transform: isFavorite(item.id) ? 'scale(1.1)' : 'scale(1)' }}
+                    >
+                      <Heart size={20} color={isFavorite(item.id) ? '#ef4444' : '#6b7280'} fill={isFavorite(item.id) ? '#ef4444' : 'none'} />
+                    </button>
                   </div>
                   <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <span style={{ fontSize: '12px', color: '#ef4444', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '5px' }}>{item.category}</span>

@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useLang } from '../context/LangContext';
+import { useFavorites } from '../context/FavoritesContext';
 
 const headerT = {
   uk: {
@@ -67,7 +68,7 @@ export default function Header() {
   
   const [activeModal, setActiveModal] = useState<'login' | 'favorites' | null>(null);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
-  const [favorites, setFavorites] = useState<any[]>([]);
+  const { favorites } = useFavorites();
 
   const t = headerT[lang];
 
@@ -147,9 +148,14 @@ export default function Header() {
               </button>
             )}
 
-            <button className="action-item" onClick={() => setActiveModal('favorites')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit' }}>
+            <button className="action-item" onClick={() => setActiveModal('favorites')} style={{ position: 'relative', background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit' }}>
               <Heart size={24} />
               <span>{t.favorites}</span>
+              {favorites.length > 0 && (
+                <span style={{ position: 'absolute', top: '-5px', right: '10px', background: 'var(--color-primary)', color: 'white', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold' }}>
+                  {favorites.length}
+                </span>
+              )}
             </button>
             <button className="action-item" onClick={() => setIsCartOpen(true)} style={{ position: 'relative', background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit' }}>
               <ShoppingCart size={24} />

@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import { LangProvider } from './context/LangContext';
+import { FavoritesProvider } from './context/FavoritesContext';
 import Home from './pages/Home';
 import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
@@ -22,7 +23,8 @@ function App() {
   return (
     <LangProvider>
       <AuthProvider>
-        <CartProvider>
+        <FavoritesProvider>
+          <CartProvider>
           <Toaster position="top-center" />
           <BrowserRouter>
             <CartModal />
@@ -42,8 +44,9 @@ function App() {
           </Routes>
           <Footer />
         </BrowserRouter>
-      </CartProvider>
-    </AuthProvider>
+          </CartProvider>
+        </FavoritesProvider>
+      </AuthProvider>
     </LangProvider>
   );
 }

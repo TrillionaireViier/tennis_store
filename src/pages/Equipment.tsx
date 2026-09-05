@@ -5,6 +5,7 @@ import { Search, ShoppingCart, Heart, User, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useFavorites } from '../context/FavoritesContext';
 
 interface EquipmentItem {
   id: number;
@@ -19,10 +20,10 @@ export default function Equipment() {
   const [items, setItems] = useState<EquipmentItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [favorites, setFavorites] = useState<number[]>([]);
   const [selectedItem, setSelectedItem] = useState<EquipmentItem | null>(null);
   
   const { addToCart } = useCart();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const { user } = useAuth();
   
   const role = user?.role || 'user';
@@ -73,16 +74,13 @@ export default function Equipment() {
     }
   };
 
-  const toggleFavorite = (id: number) => {
-    setFavorites(prev => {
-      if (prev.includes(id)) {
-        toast.success('Видалено з бажаного');
-        return prev.filter(favId => favId !== id);
-      } else {
-        toast.success('Додано до бажаного ❤️');
-        return [...prev, id];
-      }
-    });
+  const handleToggleFavorite = (item: EquipmentItem) => {
+    if (isFavorite(item.id)) {
+      toast.success('Видалено з бажаного');
+    } else {
+      toast.success('Додано до бажаного ❤️');
+    }
+    toggleFavorite(item);
   };
 
   // Групуємо товари за категоріями
@@ -134,10 +132,10 @@ export default function Equipment() {
                       <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
                         <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }} />
                         <button 
-                          onClick={() => toggleFavorite(item.id)} 
-                          style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255, 255, 255, 0.8)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'transform 0.2s', transform: favorites.includes(item.id) ? 'scale(1.1)' : 'scale(1)' }}
+                          onClick={() => handleToggleFavorite(item)} 
+                          style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255, 255, 255, 0.8)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'transform 0.2s', transform: isFavorite(item.id) ? 'scale(1.1)' : 'scale(1)' }}
                         >
-                          <Heart size={20} color={favorites.includes(item.id) ? '#ef4444' : '#6b7280'} fill={favorites.includes(item.id) ? '#ef4444' : 'none'} />
+                          <Heart size={20} color={isFavorite(item.id) ? '#ef4444' : '#6b7280'} fill={isFavorite(item.id) ? '#ef4444' : 'none'} />
                         </button>
                         {role === 'admin' && (
                           <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', gap: '5px' }}>
