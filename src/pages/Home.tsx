@@ -27,7 +27,7 @@ const homeT = {
     bookBtn: "Забронювати стіл",
     popularProducts: "Популярні Товари",
     allProducts: "Всі товари",
-    galleryTitle: "Блог",
+    galleryTitle: "Блог: Наше Життя та Турніри",
     addToCart: "В кошик"
   },
   en: {
@@ -40,7 +40,7 @@ const homeT = {
     bookBtn: "Book a Table",
     popularProducts: "Popular Products",
     allProducts: "All Products",
-    galleryTitle: "Blog",
+    galleryTitle: "Blog: Our Life & Tournaments",
     addToCart: "Add to Cart"
   }
 };
