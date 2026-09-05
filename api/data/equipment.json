@@ -1,0 +1,194 @@
+[
+  {
+    "id": 1,
+    "title": "Ракетка Butterfly Timo Boll ALC",
+    "category": "Ракетки",
+    "price": 5600,
+    "image": "https://picsum.photos/seed/ttstore1/500/500",
+    "description": "Професійна основа для атакуючої гри, що використовується легендарним Тімо Боллом."
+  },
+  {
+    "id": 2,
+    "title": "М'ячі DHS DJ40+ (3 зірки, 6 шт)",
+    "category": "М'ячі",
+    "price": 450,
+    "image": "https://picsum.photos/seed/ttstore2/500/500",
+    "description": "Офіційні м'ячі світових турнірів. Висока міцність та ідеальний відскок."
+  },
+  {
+    "id": 3,
+    "title": "Кросівки Mizuno Wave Medal 6",
+    "category": "Взуття",
+    "price": 4200,
+    "image": "https://picsum.photos/seed/ttstore3/500/500",
+    "description": "Легкі та комфортні кросівки з відмінним зчепленням для швидких переміщень біля столу."
+  },
+  {
+    "id": 4,
+    "title": "Накладка Tenergy 05",
+    "category": "Накладки",
+    "price": 2800,
+    "image": "https://picsum.photos/seed/ttstore4/500/500",
+    "description": "Найпопулярніша накладка у світі. Висока швидкість та сильне обертання."
+  },
+  {
+    "id": 5,
+    "title": "Тенісний стіл Donic Waldner Classic 25",
+    "category": "Столи",
+    "price": 25000,
+    "image": "https://picsum.photos/seed/ttstore5/500/500",
+    "description": "Професійний турнірний стіл із плитою 25 мм. Вибір ITTF."
+  },
+  {
+    "id": 6,
+    "title": "Спортивна футболка Joola",
+    "category": "Одяг",
+    "price": 950,
+    "image": "https://picsum.photos/seed/ttstore6/500/500",
+    "description": "Дихаюча футболка для інтенсивних тренувань. Матеріал, що швидко відводить вологу."
+  },
+  {
+    "id": 7,
+    "title": "Ракетка Stiga Pro Carbon",
+    "category": "Ракетки",
+    "price": 3200,
+    "image": "https://picsum.photos/seed/ttstore7/500/500",
+    "description": "Готова ракетка з карбоновими шарами для максимальної швидкості та контролю."
+  },
+  {
+    "id": 8,
+    "title": "Чохол для ракетки Donic",
+    "category": "Аксесуари",
+    "price": 450,
+    "image": "https://picsum.photos/seed/ttstore8/500/500",
+    "description": "Жорсткий чохол для безпечного зберігання однієї ракетки та трьох м'ячів."
+  },
+  {
+    "id": 9,
+    "title": "Сітка для столу Cornilleau",
+    "category": "Аксесуари",
+    "price": 1200,
+    "image": "https://picsum.photos/seed/ttstore9/500/500",
+    "description": "Надійна сітка з гвинтовим кріпленням та можливістю регулювання натягу."
+  },
+  {
+    "id": 10,
+    "title": "Спортивні шорти Butterfly",
+    "category": "Одяг",
+    "price": 1100,
+    "image": "https://picsum.photos/seed/ttstore10/500/500",
+    "description": "Легкі шорти з еластичного матеріалу, не сковують рухів під час гри."
+  },
+  {
+    "id": 11,
+    "title": "Клей для накладок Nittaku Finezip",
+    "category": "Аксесуари",
+    "price": 650,
+    "image": "https://picsum.photos/seed/ttstore11/500/500",
+    "description": "Професійний водний клей для надійного приклеювання накладок до основи."
+  },
+  {
+    "id": 12,
+    "title": "Робот-тренажер Newgy Robo-Pong",
+    "category": "Тренажери",
+    "price": 38000,
+    "image": "https://picsum.photos/seed/ttstore12/500/500",
+    "description": "Автоматична гармата для викиду м'ячів з програмуванням обертань та швидкості."
+  },
+  {
+    "id": 13,
+    "title": "Спортивна сумка Tibhar",
+    "category": "Сумки",
+    "price": 1450,
+    "image": "https://picsum.photos/seed/ttstore13/500/500",
+    "description": "Містка спортивна сумка для тенісного інвентарю та форми."
+  },
+  {
+    "id": 14,
+    "title": "Рушник Butterfly",
+    "category": "Аксесуари",
+    "price": 350,
+    "image": "https://picsum.photos/seed/ttstore14/500/500",
+    "description": "Спортивний рушник з 100% бавовни для тренувань."
+  },
+  {
+    "id": 15,
+    "title": "Очищувач для накладок Donic",
+    "category": "Аксесуари",
+    "price": 280,
+    "image": "https://picsum.photos/seed/ttstore15/500/500",
+    "description": "Спрей для очищення гуми від пилу та бруду. Подовжує термін служби накладки."
+  },
+  {
+    "id": 16,
+    "title": "Губка для очищення накладок",
+    "category": "Аксесуари",
+    "price": 90,
+    "image": "https://picsum.photos/seed/ttstore16/500/500",
+    "description": "Спеціальна м'яка губка для рівномірного нанесення очищувача."
+  },
+  {
+    "id": 17,
+    "title": "Напульсник Joola",
+    "category": "Одяг",
+    "price": 150,
+    "image": "https://picsum.photos/seed/ttstore17/500/500",
+    "description": "Напульсник з махрової тканини для поглинання поту під час гри."
+  },
+  {
+    "id": 18,
+    "title": "Ракетка DHS Hurricane 301",
+    "category": "Ракетки",
+    "price": 2900,
+    "image": "https://picsum.photos/seed/ttstore18/500/500",
+    "description": "Популярна основа ALC з відмінним балансом швидкості і контролю."
+  },
+  {
+    "id": 19,
+    "title": "М'ячі Nittaku Premium (3 зірки, 3 шт)",
+    "category": "М'ячі",
+    "price": 380,
+    "image": "https://picsum.photos/seed/ttstore19/500/500",
+    "description": "Японські м'ячі преміум-класу. Вважаються найкращими у світі."
+  },
+  {
+    "id": 20,
+    "title": "Кросівки Asics Upcourt",
+    "category": "Взуття",
+    "price": 2600,
+    "image": "https://picsum.photos/seed/ttstore20/500/500",
+    "description": "Зручне взуття для гри в залі з міцною гумовою підошвою."
+  },
+  {
+    "id": 21,
+    "title": "Тенісний стіл Sponeta S1-12e",
+    "category": "Столи",
+    "price": 14500,
+    "image": "https://picsum.photos/seed/ttstore21/500/500",
+    "description": "Всепогодний тенісний стіл для гри на вулиці. Витримує вологу."
+  },
+  {
+    "id": 22,
+    "title": "Накладка Yasaka Rakza 7",
+    "category": "Накладки",
+    "price": 1850,
+    "image": "https://picsum.photos/seed/ttstore22/500/500",
+    "description": "Накладка з високим рівнем зчеплення, ідеальна для топспінів."
+  },
+  {
+    "id": 23,
+    "title": "Форма національної збірної",
+    "category": "Одяг",
+    "price": 2100,
+    "image": "https://picsum.photos/seed/ttstore23/500/500",
+    "description": "Офіційна ігрова футболка з преміальних матеріалів."
+  },
+  {
+    "id": 24,
+    "title": "Спортивні шкарпетки TSP",
+    "category": "Одяг",
+    "price": 220,
+    "image": "https://picsum.photos/seed/ttstore24/500/500",
+    "description": "Професійні шкарпетки, що запобігають ковзанню у взутті."
+  }
+]

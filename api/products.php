@@ -13,12 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // Mock database (in a real app, use PDO with MySQL)
 $categories = [
     [
-        "id" => 1,
-        "title" => "Оренда Столів",
-        "description" => "Професійні столи для вашої гри в зручний час.",
-        "icon" => "Target"
-    ],
-    [
         "id" => 2,
         "title" => "Групові Тренування",
         "description" => "Навчання в групах під керівництвом майстрів спорту.",
@@ -56,7 +50,7 @@ echo json_encode([
     "data" => $categories,
     "seo" => [
         "title" => "Послуги Настільного Тенісу | Table Tennis Store",
-        "description" => "Найкращі зали, оренда столів, тренування та турніри з настільного тенісу в Києві."
+        "description" => "Найкращі зали, тренування та турніри з настільного тенісу в Києві."
     ]
 ]);
 ?>

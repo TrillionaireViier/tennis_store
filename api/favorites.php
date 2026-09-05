@@ -33,7 +33,6 @@ if ($action === 'list') {
         "status" => "success",
         "message" => "Список бажаного завантажено",
         "favorites" => [
-            ["id" => 1, "title" => "Оренда Столів", "icon" => "Target"],
             ["id" => 4, "title" => "Турніри", "icon" => "Trophy"]
         ]
     ]);
